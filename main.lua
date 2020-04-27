@@ -8,8 +8,8 @@ push = require 'push'
 
 function love.load()
 love.graphics.setDefaultFilter('nearest', 'nearest')
- smallFont = love.graphics.newFont('04B_03__.TTF', 20)
- scoreFont = love.graphics.newFont('04B_03__.TTF', 80)
+ smallFont = love.graphics.newFont('04B_03__.TTF', 20) --for hello
+ scoreFont = love.graphics.newFont('04B_03__.TTF', 40) --for score
  
 player1 = 0;
 player2 = 0;
@@ -17,6 +17,7 @@ player2 = 0;
 player1Y = 30
 player2Y = v_height - 40
 
+PADDEL_SPEED = 200
 
 
     push: setupScreen(v_width,v_height,WINDOWS_WIDTH,WINDOWS_HEIGHT, {
@@ -35,12 +36,18 @@ end
 
 
 function love.update(dt)
-if love.keyboard.isDown('w') then
+    if love.keyboard.isDown('w') then
+        player1Y  = player1Y - PADDEL_SPEED * dt
+    elseif love.keyboard.isDown('s') then
+        player1Y  = player1Y + PADDEL_SPEED * dt
+    end
 
-elseif love.keyboard.isDown('s') then
-end
-if love.keyboard.isDown('up') then
-elseif love.keyboard.isDown('down') then
+    if love.keyboard.isDown('up') then
+     player2Y  = player2Y - PADDEL_SPEED * dt
+
+    elseif love.keyboard.isDown('down') then
+        player2Y  = player2Y + PADDEL_SPEED * dt
+
 end
 
 end
@@ -59,11 +66,13 @@ function love.draw()
     love.graphics.rectangle('fill', 5,player1Y,5,20)
     -- right bar
     love.graphics.rectangle('fill', v_width -10,player2Y,5,20) 
-
-    love.graphics.printf('Hello World', 0, 20,v_width,'center')
-    love.graphics.setFont(smallFont)
-    love.graphics.print(player1, v_width/2 -50,v_height/3)
-    love.graphics.print(player2,v_width/2 + 50,v_height/3)
+    
+    love.graphics.setFont(smallFont) --use small 
+    love.graphics.printf('Hello   World', 15, 20,v_width,'center')
+  
+    love.graphics.setFont(scoreFont)
+    love.graphics.print(player1, v_width/2 - 50,v_height/5)
+    love.graphics.print(player2,v_width/2 + 50,v_height/5)
 
     push:apply('end')
 end
