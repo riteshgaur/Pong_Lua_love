@@ -1,21 +1,37 @@
+-- Code while watching/learning CS50 
+-- most of the code is retyped from the videos I watched
+-- of course, some part of the code has been modified to get things done as I wanted
+-- Ritesh Gaur (RG)
+
+-- Thanks Matthias Richter 
+-- https://github.com/vrld
 Class = require "class"
+
+-- Thanks Ulysse Ramage
 push = require "push"
 
+--to use Ball and Paddle Class
 require "Ball"
 require "Paddle"
 
+--window frame of the game display
 WINDOWS_WIDTH = 1200
 WINDOWS_HEIGHT = 720
 
+--virtual w and h of the game arena
 v_width = 432
 v_height = 243
 
+--to display score
 player1Score = 0
 player2Score = 0
 
 function love.load()
+    --Set title of the window frame
     love.window.setTitle("Pong")
     gameState = "start"
+
+    -- How fast/slow you want Paddles to mode up and down
     PADDLE_SPEED = 250
 
     -- randomize stuff (kind a)
@@ -24,18 +40,19 @@ function love.load()
     --load an image
     -- RGnR = love.graphics.newImage("RGnR.png")
 
-    --calling the constractor
+    --calling the constractors
     paddle1 = Paddle(5, 20, 5, 20)
     paddle2 = Paddle(v_width - 10, v_height - 30, 5, 20)
-
     ball = Ball(v_width / 2 - 2, v_height / 2 - 2, 4, 4)
 
+    -- I have no idea WTF we need this
     love.graphics.setDefaultFilter("nearest", "nearest")
 
-    smallFont = love.graphics.newFont("04B_03__.TTF", 20) --for hello
-    scoreFont = love.graphics.newFont("04B_03__.TTF", 40) --for score
-    FPSFont = love.graphics.newFont("04B_03__.TTF", 10) --for score
+    smallFont = love.graphics.newFont("04B_03__.TTF", 20)
+    scoreFont = love.graphics.newFont("04B_03__.TTF", 40)
+    FPSFont = love.graphics.newFont("04B_03__.TTF", 10)
 
+    --setup the winodw frame
     push:setupScreen(
         v_width,
         v_height,
@@ -56,20 +73,20 @@ function love.update(dt)
     paddle2:update(dt)
 
     if ball:collides(paddle1) then
-        ball.dx = -ball.x *0.5
+        ball.dx = -ball.dx
     end
     if ball:collides(paddle2) then
-        ball.dx = -ball.dx *1
+        ball.dx = -ball.dx
     end
-
+    -- top
     if ball.y <= 0 then
-        ball.dy = -ball.dx
+        ball.dy = -ball.dy
     end
-
-    if ball.y >= v_height - 2 then
-        ball.dx = -ball.x 
-        ball.y = v_height
-
+    --bottom
+    if ball.y >= v_height -4  then
+        ball.dy = - ball.dy
+        -- up speed after wall hit, 10 seem smother than 15 
+        ball.y = v_height - 10 
     end
 
     if love.keyboard.isDown("w") then
@@ -107,13 +124,12 @@ function love.update(dt)
     end
 end
 
-
 function love.draw()
     push:apply("start")
 
     love.graphics.clear(40 / 255, 45 / 255, 52 / 255, 255 / 255)
 
-    love.graphics.setFont(smallFont) 
+    love.graphics.setFont(smallFont)
 
     paddle1:render()
     paddle2:render()
