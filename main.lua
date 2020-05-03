@@ -1,9 +1,9 @@
--- Code while watching/learning CS50 
+-- Code while watching/learning CS50
 -- most of the code is retyped from the videos I watched
 -- of course, some part of the code has been modified to get things done as I wanted
 -- Ritesh Gaur (RG)
 
--- Thanks Matthias Richter 
+-- Thanks Matthias Richter
 -- https://github.com/vrld
 Class = require "class"
 
@@ -83,10 +83,10 @@ function love.update(dt)
         ball.dy = -ball.dy
     end
     --bottom
-    if ball.y >= v_height -4  then
-        ball.dy = - ball.dy
-        -- up speed after wall hit, 10 seem smother than 15 
-        ball.y = v_height - 10 
+    if ball.y >= v_height - 4 then
+        ball.dy = -ball.dy
+        -- up speed after wall hit, 10 seem smother than 15
+        ball.y = v_height - 10
     end
 
     if love.keyboard.isDown("w") then
