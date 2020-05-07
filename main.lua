@@ -26,6 +26,16 @@ v_height = 243
 player1Score = 0
 player2Score = 0
 
+--serving player to start
+
+serving_player = math.random(2) == 1 and 1 or 2
+
+
+
+
+
+
+
 function love.load()
     --Set title of the window frame
     love.window.setTitle("Pong")
@@ -45,10 +55,17 @@ function love.load()
     paddle2 = Paddle(v_width - 10, v_height - 30, 5, 20)
     ball = Ball(v_width / 2 - 2, v_height / 2 - 2, 4, 4)
 
+    if serving_player == 1 then
+        ball.dx = 100
+        else
+        ball.dx = -100
+    end
+    
+
     -- I have no idea WTF we need this
     love.graphics.setDefaultFilter("nearest", "nearest")
 
-    smallFont = love.graphics.newFont("04B_03__.TTF", 20)
+    smallFont = love.graphics.newFont("04B_03__.TTF", 15)
     scoreFont = love.graphics.newFont("04B_03__.TTF", 40)
     FPSFont = love.graphics.newFont("04B_03__.TTF", 10)
 
@@ -111,15 +128,19 @@ function love.update(dt)
         if ball.x <= 0 then
             love.audio.play(scoreUpdate_sound)
             player2Score = player2Score + 1
+            serving_player = 1
             ball:reset()
-            gameState = "start"
+            ball.dx = 100
+            gameState = "serve"
         end
 
         if ball.x >= v_width - 4 then
             love.audio.play(scoreUpdate_sound)
             player1Score = player1Score + 1
+            serving_player = 2
             ball:reset()
-            gameState = "start"
+            ball.dx = -100
+            gameState = "serve"
         end
     end
 end
@@ -129,7 +150,17 @@ function love.draw()
 
     love.graphics.clear(40 / 255, 45 / 255, 52 / 255, 255 / 255)
 
+
+    if gameState == 'start' then
+
     love.graphics.setFont(smallFont)
+    love.graphics.printf("Welcome to Pong!",100, 10, v_height, 'center')
+    love.graphics.printf("Press Enter to play",100, 30, v_height, 'center')
+
+    elseif gameState == 'serve' then
+        love.graphics.setFont(smallFont)
+        love.graphics.printf("Player "..tostring(serving_player).."'s turn", 100, 10, v_height, 'center')
+    end
 
     paddle1:render()
     paddle2:render()
@@ -148,6 +179,8 @@ function love.keypressed(key)
         love.event.quit()
     elseif key == "enter" or key == "return" then
         if gameState == "start" then
+            gameState = "serve"
+        elseif gameState == "serve" then
             gameState = "play"
         end
     end
