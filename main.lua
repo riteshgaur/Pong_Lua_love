@@ -191,7 +191,7 @@ function love.draw()
     elseif gameState == "victory" then
         --show victory msg
         love.graphics.setColor(0, 2, 1, 1)
-        love.graphics.printf("Player " .. tostring(winning_player) .. "\n WIN", 100, 80, v_height, "center")
+        love.graphics.printf("Player " .. tostring(winning_player) .. "\n WINS", 100, 80, v_height, "center")
 
         love.graphics.setFont(smallFont)
         love.graphics.setColor(0, 1, 0, 1)
