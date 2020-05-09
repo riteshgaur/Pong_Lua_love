@@ -27,7 +27,7 @@ player1Score = 0
 player2Score = 0
 
 --serving player to start
-serving_player = math.random(2) == 1 and 1 or 2
+serving_player = math.random() == 1 and 1 or 2
 
 -- who wins
 winning_player = 0
@@ -38,7 +38,7 @@ gameState = victory
 winning_score = 10
 
 --ball speed (random so make it FUN)
-ballspeed = 1
+ballspeed = 1.5
 
 function love.load()
     --Set title of the window frame
@@ -82,14 +82,19 @@ function love.load()
         {
             fullscreen = false,
             vsync = true,
-            resizable = false
+            resizable = true
         }
     )
     --load sounds
-    scoreUpdate_sound = love.audio.newSource("wall_touch.wav", "stream")
-
-    win_sound = love.audio.newSource("win.wav", "stream")
+    scoreUpdate_sound = love.audio.newSource("wall_touch.wav", "static")
+     win_sound = love.audio.newSource("win.wav", "static")
 end
+
+--automatically called by framework, so no need to call it
+function love.resize(w,h)
+push:resize(w,h)
+end
+
 
 function love.update(dt)
     paddle1:update(dt)
@@ -107,9 +112,9 @@ function love.update(dt)
     end
     --bottom
     if ball.y >= v_height - 4 then
-        ball.dy = -ball.dy * ballspeed
+        ball.dy = -ball.dy * ballspeed + 2
         -- up speed after wall hit, 10 seem smother than 15
-        ball.y = v_height - 10 * ballspeed
+        ball.y = v_height - 10 * ballspeed +2
     end
 
     if love.keyboard.isDown("w") then
@@ -226,6 +231,7 @@ function love.keypressed(key)
         gameState = "play"
         player1Score = 0
         player2Score = 0
+        ballspeed = 1.5
     end
 end
 
@@ -234,7 +240,7 @@ function displayFPS()
     love.graphics.setFont(FPSFont)
 
     -- remember .. is to concatinate
-    love.graphics.print("RGFPS:" .. tostring(love.timer.getFPS()), v_width /2, v_height - 10)
+    love.graphics.print("FPS:" .. tostring(love.timer.getFPS()), v_width /2, v_height - 10)
     love.graphics.setColor(0, 1, 0, 1)
-    love.graphics.print("Speed:" .. tostring(ballspeed), v_width / 2.5, v_height - 10)
+    love.graphics.print("Speed:" .. tostring(ballspeed), v_width / 3, v_height - 10)
 end
