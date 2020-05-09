@@ -244,3 +244,14 @@ function displayFPS()
     love.graphics.setColor(0, 1, 0, 1)
     love.graphics.print("Speed:" .. tostring(ballspeed), v_width / 3, v_height - 10)
 end
+
+function choose_mode(h,r)
+    --h: Play with human
+    --r: Play with Robot(AI)
+
+    -- if human do nothing
+    -- if r: how to run a function that takes over
+        -- call robot_play() ? 
+        
+
+end
