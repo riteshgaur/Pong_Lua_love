@@ -37,7 +37,7 @@ Need to implement the following :
 
 1. Add levels 
    1. Increase ball speed:sparkles:
-2. Game AI (Computer vs Human) :robot:
+2. ~Game AI (Computer vs Human)~ :robot: WORKING (Code level: APP Dist is not updated)
 3. Improve code:smiling_imp:
 4. Dev build for ~~Mac~~ :white_check_mark: /Windows :package:
 5. Play over the cloud (Low priority) :arrow_lower_left:
