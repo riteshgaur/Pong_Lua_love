@@ -117,13 +117,20 @@ function love.update(dt)
         ball.y = v_height - 10 * ballspeed +2
     end
 
-    if love.keyboard.isDown("w") then
-        paddle1.dy = -PADDLE_SPEED
-    elseif love.keyboard.isDown("s") then
-        paddle1.dy = PADDLE_SPEED
-    else
-        paddle1.dy = 0
-    end
+    -- if love.keyboard.isDown("w") then
+    --     paddle1.dy = -PADDLE_SPEED
+    -- elseif love.keyboard.isDown("s") then
+    --     paddle1.dy = PADDLE_SPEED
+    -- else
+    --     paddle1.dy = 0
+    -- end
+--robot
+paddle1.dy = ball.dy
+
+
+
+
+-----
 
     if love.keyboard.isDown("up") then
         paddle2.dy = -PADDLE_SPEED
