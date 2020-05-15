@@ -34,7 +34,7 @@ winning_player = 0
 --game state
 gameState = victory
 
---set winning score, player to reach to this score WINS
+--set winning score player to reach to this score WINS
 winning_score = 10
 
 --ball speed (random so make it FUN)
@@ -87,18 +87,18 @@ function love.load()
     )
     --load sounds
     scoreUpdate_sound = love.audio.newSource("wall_touch.wav", "static")
-     win_sound = love.audio.newSource("win.wav", "static")
+    win_sound = love.audio.newSource("win.wav", "static")
 end
 
 --automatically called by framework, so no need to call it
-function love.resize(w,h)
-push:resize(w,h)
+function love.resize(w, h)
+    push:resize(w, h)
 end
-
 
 function love.update(dt)
     paddle1:update(dt)
     paddle2:update(dt)
+
 
     if ball:collides(paddle1) then
         ball.dx = -ball.dx * ballspeed
@@ -114,16 +114,20 @@ function love.update(dt)
     if ball.y >= v_height - 4 then
         ball.dy = -ball.dy * ballspeed + 2
         -- up speed after wall hit, 10 seem smother than 15
-        ball.y = v_height - 10 * ballspeed +2
+        ball.y = v_height - 10 * ballspeed + 2
     end
 
-    if love.keyboard.isDown("w") then
-        paddle1.dy = -PADDLE_SPEED
-    elseif love.keyboard.isDown("s") then
-        paddle1.dy = PADDLE_SPEED
-    else
-        paddle1.dy = 0
-    end
+    --robot: Get your Robot ready
+    paddle1.dy = ball.dy
+    -----
+
+    -- if love.keyboard.isDown("w") then
+    --     paddle1.dy = -PADDLE_SPEED
+    -- elseif love.keyboard.isDown("s") then
+    --     paddle1.dy = PADDLE_SPEED
+    -- else
+    --     paddle1.dy = 0
+    -- end
 
     if love.keyboard.isDown("up") then
         paddle2.dy = -PADDLE_SPEED
@@ -148,7 +152,8 @@ function love.update(dt)
             ball.dx = -100
 
             if player1Score == winning_score then
-                winning_player = 1
+                -- winning_player = 1
+                winning_player = "Computer"
                 gameState = "victory"
             else
                 gameState = "serve"
@@ -191,7 +196,7 @@ function love.draw()
     elseif gameState == "victory" then
         --show victory msg
         love.graphics.setColor(0, 2, 1, 1)
-        love.graphics.printf("Player " .. tostring(winning_player) .. "\n WINS", 100, 80, v_height, "center")
+        love.graphics.printf("Player:" .. tostring(winning_player) .. "\n WINS", 100, 80, v_height, "center")
 
         love.graphics.setFont(smallFont)
         love.graphics.setColor(0, 1, 0, 1)
@@ -240,18 +245,15 @@ function displayFPS()
     love.graphics.setFont(FPSFont)
 
     -- remember .. is to concatinate
-    love.graphics.print("FPS:" .. tostring(love.timer.getFPS()), v_width /2, v_height - 10)
+    love.graphics.print("FPS:" .. tostring(love.timer.getFPS()), v_width / 2, v_height - 10)
     love.graphics.setColor(0, 1, 0, 1)
     love.graphics.print("Speed:" .. tostring(ballspeed), v_width / 3, v_height - 10)
 end
 
-function choose_mode(h,r)
+function choose_mode(h, r)
     --h: Play with human
     --r: Play with Robot(AI)
-
     -- if human do nothing
     -- if r: how to run a function that takes over
-        -- call robot_play() ? 
-        
-
+    -- call robot_play() ?
 end
